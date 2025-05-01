@@ -9,29 +9,26 @@ def load_sites():
         return json.load(file)["sites"]
 
 # Kullanıcı adı arama
-def search_username(site, username, results):
+def search_username(site, username):
     url = site.format(username)
     try:
         response = requests.head(url, timeout=5)
         if response.status_code == 200:
-            results.append(f"[+] Bulundu: {url}")
+            print(f"[+] Bulundu: {url}")
         else:
-            results.append(f"[-] Bulunamadı: {url}")
+            print(f"[-] Bulunamadı: {url}")
     except requests.RequestException:
-        results.append(f"[!] Hata oluştu: {url}")
+        print(f"[!] Hata oluştu: {url}")
 
 # Ana işlem
 def main(username):
     sites = load_sites()
-    results = []
+    print(f"Kullanıcı adı aranıyor: {username}")
+    print("-" * 50)
+
     with ThreadPoolExecutor(max_workers=10) as executor:
         for site in sites:
-            executor.submit(search_username, site, username, results)
-    
-    # Sonuçları dosyaya kaydet
-    with open("info.txt", "w") as file:
-        file.write("\n".join(results))
-    print("\nSonuçlar kaydedildi: results.txt")
+            executor.submit(search_username, site, username)
 
 # Komut satırı kontrolü
 if __name__ == "__main__":
