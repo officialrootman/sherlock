@@ -24,7 +24,7 @@ def search_username(site, username):
 def main(username):
     sites = load_sites()
     print(f"Kullanıcı adı aranıyor: {username}")
-    print("-" * 50)
+    print("-" * 48)
 
     with ThreadPoolExecutor(max_workers=10) as executor:
         for site in sites:
