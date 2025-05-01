@@ -1,0 +1,29 @@
+{
+    "sites": [
+        "https://twitter.com/{}",
+        "https://github.com/{}",
+        "https://www.instagram.com/{}",
+        "https://www.reddit.com/user/{}",
+        "https://www.pinterest.com/{}",
+        "https://www.tiktok.com/@{}",
+        "https://www.linkedin.com/in/{}",
+        "https://medium.com/@{}",
+        "https://www.flickr.com/people/{}",
+        "https://soundcloud.com/{}",
+        "https://about.me/{}",
+        "https://vimeo.com/{}",
+        "https://www.producthunt.com/@{}",
+        "https://dev.to/{}",
+        "https://www.behance.net/{}",
+        "https://500px.com/{}",
+        "https://www.dribbble.com/{}",
+        "https://www.kaggle.com/{}",
+        "https://gitlab.com/{}",
+        "https://www.codepen.io/{}",
+        "https://www.goodreads.com/{}",
+        "https://steamcommunity.com/id/{}",
+        "https://www.bandcamp.com/{}",
+        "https://www.last.fm/user/{}",
+        "https://angel.co/u/{}"
+    ]
+}
