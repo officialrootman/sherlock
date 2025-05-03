@@ -10,7 +10,7 @@ init(autoreset=True)
 # JSON'dan site listesini yükle
 def load_sites():
     with open("sites.json", "r") as file:
-        return json.load(file)["username_search_sites"]
+        return json.load(file)["sites"]
 
 # Kullanıcı adı arama
 def search_username(site, username):
