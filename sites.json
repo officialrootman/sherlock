@@ -1,5 +1,5 @@
 {
-    "username_search_sites": [
+    "sites": [
         "https://twitter.com/{}",
         "https://github.com/{}",
         "https://www.instagram.com/{}",
