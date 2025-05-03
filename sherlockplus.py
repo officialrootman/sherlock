@@ -1,15 +1,178 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template_string
 
 app = Flask(__name__)
 
-# JSON'daki siteler
 SITES = [
     "https://twitter.com/{}",
-    "https://github.com/{}",
-    "https://www.instagram.com/{}",
-    "https://discord.com/users/{}"
-    # Buraya diğer siteleri ekleyebilirsin...
+        "https://github.com/{}",
+        "https://www.instagram.com/{}",
+        "https://www.reddit.com/user/{}",
+        "https://www.pinterest.com/{}",
+        "https://www.tiktok.com/@{}",
+        "https://www.linkedin.com/in/{}",
+        "https://medium.com/@{}",
+        "https://www.flickr.com/people/{}",
+        "https://soundcloud.com/{}",
+        "https://about.me/{}",
+        "https://vimeo.com/{}",
+        "https://www.producthunt.com/@{}",
+        "https://dev.to/{}",
+        "https://www.behance.net/{}",
+        "https://500px.com/{}",
+        "https://www.dribbble.com/{}",
+        "https://www.kaggle.com/{}",
+        "https://gitlab.com/{}",
+        "https://www.codepen.io/{}",
+        "https://www.goodreads.com/{}",
+        "https://steamcommunity.com/id/{}",
+        "https://www.bandcamp.com/{}",
+        "https://www.last.fm/user/{}",
+        "https://angel.co/u/{}",
+        "https://www.npmjs.com/~{}",
+        "https://bitbucket.org/{}",
+        "https://www.roblox.com/users/{}/profile",
+        "https://www.blogger.com/profile/{}",
+        "https://www.patreon.com/{}",
+        "https://www.buymeacoffee.com/{}",
+        "https://scratch.mit.edu/users/{}",
+        "https://open.spotify.com/user/{}",
+        "https://www.quora.com/profile/{}",
+        "https://www.tumblr.com/blog/{}",
+        "https://www.wattpad.com/user/{}",
+        "https://www.chess.com/member/{}",
+        "https://www.deviantart.com/{}",
+        "https://stackoverflow.com/users/{}",
+        "https://www.meetup.com/members/{}",
+        "https://www.twitch.tv/{}",
+        "https://www.anilist.co/user/{}",
+        "https://www.fandom.com/u/{}",
+        "https://www.duolingo.com/profile/{}",
+        "https://www.udemy.com/user/{}",
+        "https://www.academia.edu/{}",
+        "https://www.zhihu.com/people/{}",
+        "https://www.fiverr.com/{}",
+        "https://www.upwork.com/freelancers/~{}",
+        "https://www.tradingview.com/u/{}",
+        "https://www.investing.com/members/{}",
+        "https://www.coinmarketcap.com/user/{}",
+        "https://www.crunchbase.com/person/{}",
+        "https://www.imdb.com/user/{}/",
+        "https://www.letterboxd.com/{}",
+        "https://www.pexels.com/@{}",
+        "https://www.pixabay.com/users/{}",
+        "https://www.freelancer.com/u/{}",
+        "https://www.99designs.com/profiles/{}",
+        "https://www.guru.com/freelancers/{}",
+        "https://www.peopleperhour.com/freelancer/{}",
+        "https://www.shutterstock.com/g/{}",
+        "https://www.gettyimages.com/photos/{}",
+        "https://www.adobe.com/express/profile/{}",
+        "https://www.houzz.com/pro/{}",
+        "https://www.coursera.org/user/{}",
+        "https://www.edx.org/user/{}",
+        "https://www.khanacademy.org/profile/{}",
+        "https://www.skillshare.com/user/{}",
+        "https://www.codecademy.com/profiles/{}",
+        "https://www.theverge.com/users/{}",
+        "https://www.wired.com/profile/{}",
+        "https://www.forbes.com/profile/{}",
+        "https://www.businessinsider.com/author/{}",
+        "https://www.nationalgeographic.com/profile/{}",
+        "https://www.nba.com/player/{}",
+        "https://www.fifa.com/worldcup/players/profile/{}",
+        "https://www.uefa.com/uefachampionsleague/clubs/players/{}",
+        "https://www.nhl.com/player/{}",
+        "https://www.mlb.com/player/{}",
+        "https://www.kickstarter.com/profile/{}",
+        "https://www.indiegogo.com/individuals/{}",
+        "https://www.researchgate.net/profile/{}",
+        "https://www.academia.edu/{}",
+        "https://www.artstation.com/{}",
+        "https://www.mixcloud.com/{}",
+        "https://www.discogs.com/user/{}",
+        "https://www.smashwords.com/profile/view/{}",
+        "https://www.creativemarket.com/{}",
+        "https://www.envato.com/profile/{}",
+        "https://www.trello.com/{}",
+        "https://www.asana.com/{}/profile",
+        "https://www.slack.com/team/{}",
+        "https://www.jira.com/{}/profile",
+        "https://www.facebook.com/{}",
+        "https://vk.com/{}",
+        "https://www.snapchat.com/add/{}",
+        "https://www.ok.ru/profile/{}",
+        "https://www.xing.com/profile/{}",
+        "https://weibo.com/{}",
+        "https://hashnode.com/@{}",
+        "https://www.slideshare.net/{}",
+        "https://myspace.com/{}",
+        "https://www.reverbnation.com/{}",
+        "https://www.tripadvisor.com/members/{}",
+        "https://ask.fm/{}",
+        "https://{}.substack.com",
+        "https://www.etsy.com/shop/{}",
+        "https://mastodon.social/@{}",
+        "https://pixelfed.social/{}",
+        "https://lemmy.ml/u/{}",
+        "https://misskey.io/@{}",
+        "https://gab.com/{}",
+        "https://peertube.tv/accounts/{}",
+        "https://www.dailymotion.com/{}",
+        "https://xnapper.com/{}",
+        "https://www.tumblr.com/groups/{}",
+        "https://hivesocial.app/@{}",
+        "https://bereal.com/@{}",
+        "https://discord.com/users/{}",
+        "https://www.google.com/search?q={}",
+        "https://www.youtube.com/@{}",
+        "https://www.netflix.com/{}/profile",
+        "https://www.amazon.com/profile/{}",
+        "https://www.ebay.com/usr/{}",
+        "https://www.wikipedia.org/wiki/{}",
+        "https://www.microsoft.com/en-us/profile/{}"
 ]
+
+HTML_TEMPLATE = """
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <title>Hesap Bulucu</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; }
+        input { padding: 10px; margin: 10px; }
+        button { padding: 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>Sosyal Medya Hesaplarını Bul</h1>
+    <input type="text" id="username" placeholder="Kullanıcı adını gir">
+    <button onclick="findProfiles()">Ara</button>
+    <ul id="results"></ul>
+
+    <script>
+        function findProfiles() {
+            const username = document.getElementById("username").value;
+            if (!username) return alert("Lütfen bir kullanıcı adı girin!");
+
+            fetch(`/get_profiles?username=${username}`)
+                .then(response => response.json())
+                .then(data => {
+                    const results = document.getElementById("results");
+                    results.innerHTML = "";
+                    data.profiles.forEach(link => {
+                        results.innerHTML += `<li><a href="${link}" target="_blank">${link}</a></li>`;
+                    });
+                });
+        }
+    </script>
+</body>
+</html>
+"""
+
+@app.route("/")
+def home():
+    return render_template_string(HTML_TEMPLATE)
 
 @app.route("/get_profiles", methods=["GET"])
 def get_profiles():
