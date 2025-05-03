@@ -118,6 +118,7 @@
         "https://xnapper.com/{}",
         "https://www.tumblr.com/groups/{}",
         "https://hivesocial.app/@{}",
-        "https://bereal.com/@{}"
+        "https://bereal.com/@{}",
+        "https://discord.com/users/{}"
     ]
 }
