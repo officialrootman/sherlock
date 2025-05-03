@@ -25,18 +25,20 @@ def search_username(site, username):
         print(f"{Fore.YELLOW}[!] Hata oluştu: {url}")  # SARI
 
 # Ana işlem
-def main(username):
+def main(usernames):
     sites = load_sites()
-    print(f"{Fore.CYAN}Kullanıcı adı aranıyor: {username}")  # MAVİ
-    print("-" * 48)
+    
+    for username in usernames:
+        print(f"\n{Fore.CYAN}Kullanıcı adı aranıyor: {username}")  # MAVİ
+        print("-" * 48)
 
-    with ThreadPoolExecutor(max_workers=10) as executor:
-        for site in sites:
-            executor.submit(search_username, site, username)
+        with ThreadPoolExecutor(max_workers=10) as executor:
+            for site in sites:
+                executor.submit(search_username, site, username)
 
 # Komut satırı kontrolü
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print(f"{Fore.RED}Kullanım: python sherlock.py user123")
+        print(f"{Fore.RED}Kullanım: python sherlock.py user1 user12 user123")
     else:
-        main(sys.argv[1])
+        main(sys.argv[1:])
