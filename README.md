@@ -14,8 +14,15 @@ Colorama desteği sayesinde sonuçlar **renkli bir şekilde terminalde görünt�
 Tool'u çalıştırmak için aşağıdaki adımları izleyin:
 
 ```bash
+## Kurulum:
 apt install py-pip
 pip install colorama requests
 git clone https://github.com/officialrootman/sherlock.git
 cd sherlock
+
+## Kullanım
+Eğer tekli istersen:
 python3 sherlock.py user123
+
+Eğer Çoklu İstersen:
+python3 sherlock.py user1 user12 user123
